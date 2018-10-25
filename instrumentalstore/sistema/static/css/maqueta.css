@@ -59,6 +59,9 @@ header nav a:hover {
 section #main{
 	border: 1px solid #E6C7AB;
 }
+body{
+	background: url("Chrysanthemum.jpg")
+}
 footer {
 	background-color: #CF925B;
 	color: white;
