@@ -56,7 +56,9 @@ header nav a {
 header nav a:hover {
 	background-color: #E6C7AB;
 }
-
+section #main{
+	border: 1px solid #E6C7AB;
+}
 footer {
 	background-color: #CF925B;
 	color: white;
