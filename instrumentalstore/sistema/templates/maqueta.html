@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es"> <!-- El atributo lang permite especificar el idioma de la página -->
+	<head>
+		<meta charset="utf-8" /> <!-- Codificación de caracteres de la página -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" /> <!-- La página se ajusta al ancho del navegador o dispositivo -->
+		<title>{{ titulo }} | Instrumental Store</title>
+		<link rel="stylesheet" type="text/css" media="all" href="{% static 'css/maqueta.css' %}" />
+		<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/prefixfree.min.js' %}"></script>
+		<!-- Aquí se realizan las cargas adicionales de archivos requeridos para cada página del sitio -->
+		{% block Imports %}
+		{% endblock %}
+	</head>
+	<body>
+		<div id="contenedor">
+			<header>
+				<div class="logo">
+					<a href="{% url 'index' %}"><img src="{% static 'images/logo instrumentalstore.png' %}" /></a>
+				</div>
+
+				<nav>
+					<a href="{% url 'index' %}">Inicio</a>
+					<a href="#">Quienes somos</a>
+					<a href="#">Instrumentos</a>
+					<a href="#">Contáctanos</a>
+					<a href="#">Registrarse</a>
+				</nav>
+
+				{% block AdditHeader %}
+				{% endblock %}
+			</header>
+
+			<section id="main">
+				{% block Content %}
+				{% endblock %}
+			</section>
+
+			<footer>
+				<p align="center">Arquitectura</p>
+				<br />
+				<p align="center">
+					<a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01!" height="31" width="88"></a>
+					<a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" /></a>
+				</p>
+			</footer>
+		</div>
+	</body>
+</html>

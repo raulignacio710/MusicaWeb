@@ -1,0 +1,55 @@
+* {
+	box-sizing: border-box; /* Ajusta los elementos de acuerdo el tamaño de su contenedor, incluyendo los espaciados */
+	font-family: "SF Pro Display", "Calibri", "Arial"; /* Familias de tipografías */
+	margin: 0px;
+	padding: 0px;
+}
+#contenedor {
+	background-color: white;
+	display: flex; /* Modo flexbox */
+	flex-flow: row wrap; /* El flujo de elementos irá en fila y seguirá fluyendo hacia abajo */
+	margin: auto; /* El contenedor se centra */
+	width: 80%;
+}
+header {
+	align-items: center; /* Centra los elementos */
+	background-color: white;
+	display: flex; /* Modo flexbox */
+	flex-flow: column; /* El flujo de elementos irá en fila y seguirá fluyendo hacia abajo */
+	justify-content: space-between; /* Los elementos se justificarán rellenando los espacios entre estos */
+	width: 100%; /* Toma todo el ancho del contenedor */
+}
+/* Reglas para el logo del sitio web */
+header .logo {
+	padding: 10px;
+	width: 250px;
+}
+header nav {
+	display: flex; /* Modo flexbox */
+    flex-direction: row; /* El flujo de los elementos irá en fila */
+    width: 100%;
+}
+
+/* Reglas para cada enlace de la barra de navegación */
+header nav a {
+	background-color: #CF925B;
+	color: white;
+	font-size: 24px;
+	flex-grow: 1;
+    padding: 10px;
+	text-align: center; /* Textos centrados */
+	text-decoration: none; /* Sin ninguna decoración del texto */
+	transition-duration: 400ms; /* Duración del efecto de transición */
+	user-select: none; /* Permite que no se seleccionen los textos de los enlaces */
+}
+
+/* Se aplica este bloque cuando el cursor esté encima de un enlace */
+header nav a:hover {
+	background-color: #E6C7AB;
+}
+
+footer {
+	background-color: #CF925B;
+	padding: 5px 15px;
+	width: 100%; /* Toma todo el ancho del contenedor */
+}
