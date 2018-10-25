@@ -14,6 +14,7 @@
 header {
 	align-items: center; /* Centra los elementos */
 	background-color: white;
+	border: 1px solid #E6C7AB;
 	display: flex; /* Modo flexbox */
 	flex-flow: column; /* El flujo de elementos irá en fila y seguirá fluyendo hacia abajo */
 	justify-content: space-between; /* Los elementos se justificarán rellenando los espacios entre estos */
@@ -23,6 +24,12 @@ header {
 header .logo {
 	padding: 10px;
 	width: 250px;
+}
+header .logo img {
+	margin: auto;
+}
+header .logo h3{
+	color: #CF925B;
 }
 header nav {
 	display: flex; /* Modo flexbox */
@@ -36,11 +43,13 @@ header nav a {
 	color: white;
 	font-size: 24px;
 	flex-grow: 1;
-    padding: 10px;
+	padding: 10px;
+	border: 1px solid #E6C7AB;
 	text-align: center; /* Textos centrados */
 	text-decoration: none; /* Sin ninguna decoración del texto */
 	transition-duration: 400ms; /* Duración del efecto de transición */
 	user-select: none; /* Permite que no se seleccionen los textos de los enlaces */
+	
 }
 
 /* Se aplica este bloque cuando el cursor esté encima de un enlace */
@@ -50,6 +59,8 @@ header nav a:hover {
 
 footer {
 	background-color: #CF925B;
+	color: white;
+	border: 1px solid #E6C7AB;
 	padding: 5px 15px;
 	width: 100%; /* Toma todo el ancho del contenedor */
 }
