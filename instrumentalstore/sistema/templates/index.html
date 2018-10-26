@@ -1,1 +1,18 @@
 {% extends "maqueta.html" %}
+{% load staticfiles %}
+{% block Imports%}
+    <link rel="stylesheet" type="text/css" media="all" href="{% static 'css/index.css' %}" />
+    <script src="{% static 'js/carrusel.js' %}"></script>
+    <script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/jquery.bxslider.css' %}">
+{% endblock %}
+{% block Content %}
+    <div id="carrusel">
+        <img src="{% static 'images/carrusel1.png' %}" width="150" alt="">
+        <img src="{% static 'images/carrusel2.png' %}" width="150" alt="">
+        <img src="{% static 'images/carrusel3.png' %}" width="150" alt="">
+    </div>
+    <div id="cuerpo">
+        <h2>Productos destacados</h2>
+    </div>
+{% endblock %}

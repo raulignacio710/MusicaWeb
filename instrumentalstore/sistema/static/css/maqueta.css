@@ -60,7 +60,8 @@ section #main{
 	border: 1px solid #E6C7AB;
 }
 body{
-	background: url("Chrysanthemum.jpg")
+	background: url("images/fondo_musica1.jpg");
+	background-size: cover;
 }
 footer {
 	background-color: #CF925B;
