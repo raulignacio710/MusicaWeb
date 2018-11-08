@@ -20,3 +20,7 @@ class FormInstrumento(forms.Form):
     descripcion = forms.CharField(label = "Descripcion", widget = forms.Textarea(attrs = { "placeholder": "Ingrese descripción" }))
     precio = forms.IntegerField(label = "Precio", widget = forms.NumberInput(attrs = { "min": "0" }))
     stock = forms.IntegerField(label = "Stock", widget = forms.NumberInput(attrs = { "min": "0" }))
+
+class Login(forms.Form):
+    username = forms.CharField(label = "Nombre de usuario", max_length = 30, widget = forms.TextInput(attrs = { "placeholder": "Ingrese nombre de usuario" }))
+    password = forms.CharField(label = "Contraseña", max_length = 30, widget = forms.PasswordInput(attrs = { "placeholder": "Ingrese contraseña" }))
