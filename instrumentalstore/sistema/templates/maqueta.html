@@ -1,14 +1,13 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="es"> <!-- El atributo lang permite especificar el idioma de la página -->
+<html lang="es">
 	<head>
-		<meta charset="utf-8" /> <!-- Codificación de caracteres de la página -->
-		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" /> <!-- La página se ajusta al ancho del navegador o dispositivo -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 		<title>{{ titulo }} | Instrumental Store</title>
 		<link rel="stylesheet" type="text/css" media="all" href="{% static 'css/maqueta.css' %}" />
 		<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/prefixfree.min.js' %}"></script>
-		<!-- Aquí se realizan las cargas adicionales de archivos requeridos para cada página del sitio -->
 		{% block Imports %}
 		{% endblock %}
 	</head>
