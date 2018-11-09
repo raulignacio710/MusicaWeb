@@ -1,5 +1,7 @@
 {% extends "maqueta.html" %}
 {% block Content %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/formularios.css' %}">
     <h2>Contacto</h2>
     <form method="POST" action="{% url 'contacto' %}">
         {% csrf_token %}

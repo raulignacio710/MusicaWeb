@@ -5,8 +5,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from .forms import Login, FormCliente, FormInstrumento, FormContacto
 from .models import Cliente, Instrumento, Mensaje
+from django.contrib.auth.models import User
 
-# Create your views here.
+#GENERAL
 def index(request):
     return render(request, "index.html", { "titulo": "Inicio" })
 
@@ -14,9 +15,6 @@ def nosotros(request):
     return render(request, "quienes.html", { "titulo": "¿Quiénes somos?" })
 
 def ingresar(request):
-    if request.user.is_authenticated:
-        return redirect("index")
-
     if request.method == "POST":
         form = Login(request.POST)
         if form.is_valid():
@@ -29,6 +27,18 @@ def ingresar(request):
         form = Login()
     return render(request, "login.html", { "titulo": "Inicio de sesión", "form": form })
 
+def registrar(request):
+    form=FormCliente(request.POST or None)
+    if form.is_valid():
+        data=form.cleaned_data
+        user=User.objects.create_user(username=data.get("username"),password=data.get("password"),email=data.get("email"),first_name=data.get("first_name"),last_name=data.get("last_name"))
+        u=Cliente(user=user,run=data.get("run"))
+        user.save()
+        u.save()
+        return redirect('index')
+    form=FormCliente()
+    return render(request,'registro.html',{'form':form,})
+
 def contacto(request):
 	if request.method == "POST":
 		form = FormContacto(request.POST)
@@ -40,35 +50,13 @@ def contacto(request):
 		form = FormContacto()
 	return render(request, "contacto.html", { "titulo": "Contacto", "form": form })
 
+def salir(request):
+    logout(request)
+    return redirect("/")
+
+#GESTION INSTRUMENTOS
 @login_required(login_url = "login")
-@staff_member_required
-def gestionClientes(request):
-    if request.method == "POST":
-        form = FormCliente(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            Cliente.objects.create(run = data.get("runCliente"), nombres = data.get("nombres"), apPaterno = data.get("apPaterno"), apMaterno = data.get("apMaterno"))
-            return redirect("gestionClientes")
-    else:
-        form = FormCliente()
-
-    clientes = Cliente.objects.all()
-    paginator = Paginator(clientes, 5)
-
-    try:
-        pag = int(request.GET.get("page", 1))
-    except ValueError:
-        pag = 1
-
-    try:
-        clientes = paginator.page(pag)
-    except (InvalidPage, EmptyPage):
-        clientes = paginator.page(paginator.num_pages)
-
-    return render(request, "gestionClientes.html", { "titulo": "Gestión de clientes", "listado": clientes, "form": form })
-
-@login_required(login_url = "login")
-@staff_member_required
+#@staff_member_required
 def gestionInstrumentos(request):
     if request.method == "POST":
         form = FormInstrumento(request.POST)
@@ -92,37 +80,10 @@ def gestionInstrumentos(request):
     except (InvalidPage, EmptyPage):
         instrumentos = paginator.page(paginator.num_pages)
 
-    return render(request, "gestionInstrumentos.html", { "titulo": "Gestión de instrumentos", "listado": instrumentos, "form": form})
+    return render(request, "gestionInstrumentos.html", { "titulo": "Gestión de instrumentos", "instrumentos": instrumentos, "form": form})
 
 @login_required(login_url = "login")
-@staff_member_required
-def actualizarCliente(request, pk):
-    cliente = Cliente.objects.get(codigoCliente = pk)
-    if not cliente:
-        return render(request, "editarClienteFail.html", { "titulo": "Cliente no existente" })
-
-    if request.method == "POST":
-        form = FormCliente(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            cliente.run = data.get("runCliente")
-            cliente.nombres = data.get("nombres")
-            cliente.apPaterno = data.get("apPaterno")
-            cliente.apMaterno = data.get("apMaterno")
-            cliente.save()
-            return redirect("gestionClientes")
-    else:
-        data = {
-            "runCliente": cliente.run,
-            "nombres": cliente.nombres,
-            "apPaterno": cliente.apPaterno,
-            "apMaterno": cliente.apMaterno
-        }
-        form = FormCliente(data)
-    return render(request, "editarCliente.html", { "titulo": "Editando a %s" % cliente.run, "form": form })
-
-@login_required(login_url = "login")
-@staff_member_required
+#@staff_member_required
 def actualizarInstrumento(request, pk):
     instrumento = Instrumento.objects.get(codigoInstrumento = pk)
     if not instrumento:
@@ -155,6 +116,74 @@ def actualizarInstrumento(request, pk):
     return render(request, "editarInstrumento.html", { "titulo": "Editando a instrumento %s" % instrumento.codigoInstrumento, "form": form })
 
 @login_required(login_url = "login")
+#@staff_member_required
+def eliminarInstrumento(request, pk):
+    instrumento = Instrumento.objects.get(codigoInstrumento = pk)
+    if instrumento:
+        instrumento.delete()
+        return redirect("gestionInstrumentos")
+    return render(request, "eliminarInstrumentoFail.html", { "titulo": "Error al eliminar instrumento" })
+
+#GESTION CLIENTES
+
+
+@login_required(login_url = "login")
+@staff_member_required
+def gestionClientes(request):
+    if request.method == "POST":
+        form = FormCliente(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            Cliente.objects.create(run = data.get("runCliente"), nombres = data.get("nombres"), apPaterno = data.get("apPaterno"), apMaterno = data.get("apMaterno"))
+            return redirect("gestionClientes")
+    else:
+        form = FormCliente()
+
+    clientes = Cliente.objects.all()
+    paginator = Paginator(clientes, 5)
+
+    try:
+        pag = int(request.GET.get("page", 1))
+    except ValueError:
+        pag = 1
+
+    try:
+        clientes = paginator.page(pag)
+    except (InvalidPage, EmptyPage):
+        clientes = paginator.page(paginator.num_pages)
+
+    return render(request, "gestionClientes.html", { "titulo": "Gestión de clientes", "listado": clientes, "form": form })
+
+
+
+@login_required(login_url = "login")
+@staff_member_required
+def actualizarCliente(request, pk):
+    cliente = Cliente.objects.get(codigoCliente = pk)
+    if not cliente:
+        return render(request, "editarClienteFail.html", { "titulo": "Cliente no existente" })
+
+    if request.method == "POST":
+        form = FormCliente(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            cliente.run = data.get("runCliente")
+            cliente.nombres = data.get("nombres")
+            cliente.apPaterno = data.get("apPaterno")
+            cliente.apMaterno = data.get("apMaterno")
+            cliente.save()
+            return redirect("gestionClientes")
+    else:
+        data = {
+            "runCliente": cliente.run,
+            "nombres": cliente.nombres,
+            "apPaterno": cliente.apPaterno,
+            "apMaterno": cliente.apMaterno
+        }
+        form = FormCliente(data)
+    return render(request, "editarCliente.html", { "titulo": "Editando a %s" % cliente.run, "form": form })
+
+@login_required(login_url = "login")
 @staff_member_required
 def eliminarCliente(request, pk):
     cliente = Cliente.objects.get(codigoCliente = pk)
@@ -163,11 +192,3 @@ def eliminarCliente(request, pk):
         return redirect("gestionClientes")
     return render(request, "eliminarClienteFail.html", { "titulo": "Error al eliminar cliente" })
 
-@login_required(login_url = "login")
-@staff_member_required
-def eliminarInstrumento(request, pk):
-    instrumento = Instrumento.objects.get(codigoInstrumento = pk)
-    if instrumento:
-        instrumento.delete()
-        return redirect("gestionInstrumentos")
-    return render(request, "eliminarInstrumentoFail.html", { "titulo": "Error al eliminar instrumento" })

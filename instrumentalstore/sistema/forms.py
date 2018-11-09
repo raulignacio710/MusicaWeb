@@ -7,10 +7,12 @@ class FormContacto(forms.Form):
     mensaje = forms.CharField(label = "Mensaje", widget = forms.Textarea(attrs = { "placeholder": "Ingrese mensaje" }))
 
 class FormCliente(forms.Form):
-    runCliente = forms.CharField(label = "RUN cliente", max_length = 10, widget = forms.TextInput(attrs = { "placeholder": "12345678-9" }))
-    nombres = forms.CharField(label = "Nombres", max_length = 20, widget = forms.TextInput(attrs = { "placeholder": "Ingrese nombres" }))
-    apPaterno = forms.CharField(label = "Apellido paterno", max_length = 20, widget = forms.TextInput(attrs = { "placeholder": "Ingrese apellido paterno"}))
-    apMaterno = forms.CharField(label = "Apellido materno", max_length = 20, widget = forms.TextInput(attrs = { "placeholder": "Ingrese apellido materno"}))
+    first_name=forms.CharField(widget=forms.TextInput(),label="Ingrese su Nombre")
+    last_name=forms.CharField(widget=forms.TextInput(),label="Ingrese su Apellido")
+    run=forms.CharField(widget=forms.TextInput(),label="Ingreso de Rut")
+    username=forms.CharField(widget=forms.TextInput(),label="Ingreso Nombre Usuario")
+    password=forms.CharField(widget=forms.PasswordInput(),label="Ingreso de Contraseña")
+    email=forms.EmailField(widget=forms.EmailInput(),label="Email")
 
 class FormInstrumento(forms.Form):
     marca = forms.CharField(label = "Marca", max_length = 20, widget = forms.TextInput(attrs = { "placeholder": "Ingrese marca" }))
@@ -22,5 +24,5 @@ class FormInstrumento(forms.Form):
     stock = forms.IntegerField(label = "Stock", widget = forms.NumberInput(attrs = { "min": "0" }))
 
 class Login(forms.Form):
-    username = forms.CharField(label = "Nombre de usuario", max_length = 30, widget = forms.TextInput(attrs = { "placeholder": "Ingrese nombre de usuario" }))
+    username = forms.CharField(label = "Nombre de usuario", max_length = 30, widget = forms.TextInput(attrs = { "placeholder": "Ingrese usuario" }))
     password = forms.CharField(label = "Contraseña", max_length = 30, widget = forms.PasswordInput(attrs = { "placeholder": "Ingrese contraseña" }))

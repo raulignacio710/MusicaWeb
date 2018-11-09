@@ -58,6 +58,7 @@ header nav a:hover {
 }
 section #main{
 	border: 1px solid #E6C7AB;
+	align-items: center;
 }
 body{
 	background: url("images/fondo_musica1.jpg");

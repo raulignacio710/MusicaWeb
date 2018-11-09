@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class Mensaje(models.Model):
     codigoMensaje = models.AutoField(primary_key = True)
@@ -8,11 +8,9 @@ class Mensaje(models.Model):
     mensaje = models.TextField()
 
 class Cliente(models.Model):
-    codigoCliente = models.AutoField(primary_key = True)
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
     run = models.CharField(max_length = 10)
-    nombres = models.CharField(max_length = 20)
-    apPaterno = models.CharField(max_length = 20)
-    apMaterno = models.CharField(max_length = 20)
+
 
 class Instrumento(models.Model):
     codigoInstrumento = models.AutoField(primary_key = True)

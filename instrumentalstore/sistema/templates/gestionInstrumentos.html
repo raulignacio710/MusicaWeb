@@ -1,0 +1,53 @@
+{% extends "maqueta.html" %}
+{% block Content %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/formularios.css' %}">
+<link rel="stylesheet" href="{% static 'css/tablas.css' %}">
+<div class="contenedor">
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+                <div class="field_container">
+                    {{ field.errors }}
+                    {{ field.label_tag}} </br>
+                    {{ field }}
+                </div>
+            {% endfor %}
+        <button class="boton" type="submit">Agregar Instrumento</button>
+    </form>
+    <h1>Lista de Instrumentos</h1>
+    {% if instrumentos %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Serie</th>
+            <th>Tipo</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+        </tr>
+        {% for i in instrumentos.object_list %}
+        <tr>
+            <td>{{ i.codigoInstrumento }}</td>
+            <td>{{ i.marca }}</td>
+            <td>{{ i.modelo }}</td>
+            <td>{{ i.serie }}</td>
+            <td>{{ i.tipo }}</td>
+            <td>{{ i.descripcion }}</td>
+            <td>{{ i.precio }}</td>
+            <td>{{ i.stock }}</td>
+            <td>
+                <a href="{% url 'actualizarInstrumento' pk=i.codigoInstrumento %}">Editar</a>
+                <a href="{% url 'eliminarInstrumento' pk=i.codigoInstrumento %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <h5>No hay Instrumentos</h5>
+    {% endif %}
+</div>
+{% endblock %}
